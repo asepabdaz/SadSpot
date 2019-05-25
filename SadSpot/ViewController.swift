@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var gradientUIView: UIView!
     @IBOutlet weak var emotionImageView: UIImageView!
     
+    var status = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -36,7 +38,26 @@ class ViewController: UIViewController {
     }
     
     @objc func clickAction(_ sender: UIView){
-        print("any time")
+        if status == true{
+            UIView.animate(withDuration: 0.5, animations: {
+                
+            }) { (isFinished) in
+                UIView.animate(withDuration: 3, animations: {
+                    self.emotionImageView.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                })
+            }
+            status = false
+        }else{
+            UIView.animate(withDuration: 0.5, animations: {
+                
+            }) { (isFinished) in
+                UIView.animate(withDuration: 3, animations: {
+                    self.emotionImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                })
+            }
+            status = true
+        }
+        
     }
     func accelerator() {
         motion.accelerometerUpdateInterval = 0.1
@@ -50,7 +71,25 @@ class ViewController: UIViewController {
                 self.layerGradient.startPoint = CGPoint(x: Double(0.5), y: Double(z))
                 self.layerGradient.endPoint = CGPoint(x: Double(0.5), y: Double(z)+1.00000)
             
-                
+                if z >= 0.3{
+                    UIView.animate(withDuration: 2, animations: {
+                        self.emotionImageView.alpha = 1
+                        self.emotionImageView.image = UIImage(named: "sad")
+                    })
+                    
+                    
+                }else if z >= -0.7 {
+                    UIView.animate(withDuration: 2, animations: {
+                        self.emotionImageView.alpha = 0
+                    })
+                    
+                }else{
+                    UIView.animate(withDuration: 2, animations: {
+                        self.emotionImageView.alpha = 1
+                        self.emotionImageView.image = UIImage(named: "joy")
+                    })
+                    
+                }
                 
             }
         }
