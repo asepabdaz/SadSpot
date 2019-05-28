@@ -19,6 +19,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var downArrowImageView: UIImageView!
     @IBOutlet weak var upArrowImageView: UIImageView!
     
+    
+    @IBOutlet weak var thridFactorImageView: UIImageView!
+    @IBOutlet weak var secondFactorImageView: UIImageView!
+    @IBOutlet weak var firstFactorImageVew: UIImageView!
     var status = true
     
     override func viewDidLoad() {
@@ -40,30 +44,46 @@ class ViewController: UIViewController {
         
         upArrowImageView.alpha = 0
         downArrowImageView.alpha = 0
-        
+        emotionImageView.alpha = 0
+        firstFactorImageVew.alpha = 0
+        secondFactorImageView.alpha = 0
+        thridFactorImageView.alpha = 0
     }
     
     @objc func clickAction(_ sender: UIView){
         if status == true{
-            UIView.animate(withDuration: 0.5, animations: {
-                
-            }) { (isFinished) in
-                UIView.animate(withDuration: 3, animations: {
-                    self.emotionImageView.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-                })
-            }
+            trueAnimate()
             status = false
         }else{
-            UIView.animate(withDuration: 0.5, animations: {
-                
-            }) { (isFinished) in
-                UIView.animate(withDuration: 3, animations: {
-                    self.emotionImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                })
-            }
+            falseAnimate()
             status = true
         }
         
+    }
+    func trueAnimate() {
+        UIView.animate(withDuration: 2, animations: {
+            
+        }) { (isFinished) in
+            UIView.animate(withDuration: 1, animations: {
+                self.firstFactorImageVew.alpha = 1
+                self.secondFactorImageView.alpha = 1
+                self.thridFactorImageView.alpha = 1
+                self.emotionImageView.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                
+            })
+        }
+    }
+    func falseAnimate() {
+        UIView.animate(withDuration: 1, animations: {
+            
+        }) { (isFinished) in
+            UIView.animate(withDuration: 2, animations: {
+                self.firstFactorImageVew.alpha = 0
+                self.secondFactorImageView.alpha = 0
+                self.thridFactorImageView.alpha = 0
+                self.emotionImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            })
+        }
     }
     func accelerator() {
         motion.accelerometerUpdateInterval = 0.1
@@ -82,9 +102,12 @@ class ViewController: UIViewController {
                         sad()
                     })
                     
-                    
+                    self.upArrowImageView.layer .removeAllAnimations()
+                    self.downArrowImageView.layer .removeAllAnimations()
+
                 }else if z >= -0.7 {
-                    UIView.animate(withDuration: 5, delay: 0, options: .repeat, animations: {
+                    self.upArrowImageView.layer.animation
+                    UIView.animate(withDuration: 4, delay: 0, options: .repeat, animations: {
                         arrow()
                     }, completion: { (isFinished) in
                         movementArrow()
@@ -94,7 +117,9 @@ class ViewController: UIViewController {
                     UIView.animate(withDuration: 2, animations: {
                         happy()
                     })
-                    
+                    self.upArrowImageView.layer.removeAllAnimations()
+                    self.downArrowImageView.layer .removeAllAnimations()
+
                 }
                 
             }
@@ -105,16 +130,26 @@ class ViewController: UIViewController {
             self.emotionImageView.image = UIImage(named: "sad")
             self.upArrowImageView.alpha = 0
             self.downArrowImageView.alpha = 0
+            self.firstFactorImageVew.image = UIImage(named: "couses1")
+            self.secondFactorImageView.image = UIImage(named: "couses2")
+            self.thridFactorImageView.image = UIImage(named: "couses3")
+            self.downArrowImageView.center.y = 504
+            self.upArrowImageView.center.y = 448.5
         }
         func happy(){
             self.emotionImageView.alpha = 1
             self.emotionImageView.image = UIImage(named: "joy")
             self.upArrowImageView.alpha = 0
             self.downArrowImageView.alpha = 0
+            self.firstFactorImageVew.image = UIImage(named: "time")
+            self.secondFactorImageView.image = UIImage(named: "family")
+            self.thridFactorImageView.image = UIImage(named: "friend")
+            self.downArrowImageView.center.y = 504
+            self.upArrowImageView.center.y = 448.5
+
         }
 //
         func arrow(){
-//
             self.upArrowImageView.alpha = 1
             self.downArrowImageView.alpha = 1
             self.downArrowImageView.center.y = 504 + 150
@@ -123,7 +158,11 @@ class ViewController: UIViewController {
         }
         func movementArrow(){
             self.emotionImageView.alpha = 0
-//            self.downArrowImageView.alpha = 1
+            self.firstFactorImageVew.alpha = 0
+            self.secondFactorImageView.alpha = 0
+            self.thridFactorImageView.alpha = 0
+            status = true
+            self.emotionImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             
         }
     }
